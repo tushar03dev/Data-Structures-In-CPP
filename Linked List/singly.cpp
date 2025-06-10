@@ -93,6 +93,14 @@ void insertAtRandom(Node* &head, Node* tail, int data, int pos){
     }
 }
 
+void deleteNode(Node* &head, Node* &tail, int pos){
+    if(head == nullptr){
+        cout<<"LL is empty";
+        return;
+    }
+    else
+}
+
 int main(){
 
     Node* first = new Node(10);
