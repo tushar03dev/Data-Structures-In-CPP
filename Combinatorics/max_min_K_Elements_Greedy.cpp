@@ -1,13 +1,10 @@
 //
-// Created by epiyu on 02-08-2025.
+// Created by tushar on 3/8/25.
 //
 #include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-    int t;
-    cin >> t;
-    while (t--) {
         int n;
         int k;
         cin >> n >> k;
@@ -20,13 +17,13 @@ int main() {
             cin >> second[i];
         }
 
-        vector<pair<int, int> > firstCopy;
-        vector<pair<int, int> > secondCopy;
+        vector<pair<int, int>> firstCopy;
+        vector<pair<int, int>> secondCopy;
         for (int i = 0; i < n; i++) {
-            firstCopy.push_back({first[i], i});
+            firstCopy.emplace_back(first[i], i);
         }
         for (int i = 0; i < n; i++) {
-            secondCopy.push_back({second[i], i});
+            secondCopy.emplace_back(second[i], i);
         }
         sort(firstCopy.begin(), firstCopy.end(),
              [](const pair<int, int> &a, const pair<int, int> &b) {
@@ -40,6 +37,7 @@ int main() {
 
 
         pair<int, int> sum1 = {0, 0}, sum2 = {0, 0};
+
         for (int i = 0; i < k; i++) {
             sum1.first += firstCopy[i].first;
             sum1.second += second[firstCopy[i].second];
@@ -47,17 +45,8 @@ int main() {
             sum2.second += first[secondCopy[i].second];
         }
 
-        if (min(sum1.first, sum1.second) > min(sum2.first, sum2.second)) {
-            for (int i = 0; i < k; i++) {
-                cout << firstCopy[i].second << " ";
-            }
-        } else {
-            for (int i = 0; i < k; i++) {
-                cout << secondCopy[i].second << " ";
-            }
-        }
-        cout << endl;
-    }
+    cout<<max(min(sum1.first, sum1.second), min(sum2.first, sum2.second));
+
 
     return 0;
 }
