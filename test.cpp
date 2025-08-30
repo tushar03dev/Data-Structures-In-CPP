@@ -1,63 +1,52 @@
-//
-// Created by epiyu on 02-08-2025.
-//
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        int k;
-        cin >> n >> k;
-        vector<int> first(n);
-        vector<int> second(n);
-        for (int i = 0; i < n; i++) {
-            cin >> first[i];
-        }
-        for (int i = 0; i < n; i++) {
-            cin >> second[i];
-        }
+vector<int> getDistinctCharacters(int n, string data, vector<vector<int>>& queries) {
+    vector<int> results;
 
-        vector<pair<int, int> > firstCopy;
-        vector<pair<int, int> > secondCopy;
-        for (int i = 0; i < n; i++) {
-            firstCopy.push_back({first[i], i});
-        }
-        for (int i = 0; i < n; i++) {
-            secondCopy.push_back({second[i], i});
-        }
-        sort(firstCopy.begin(), firstCopy.end(),
-             [](const pair<int, int> &a, const pair<int, int> &b) {
-                 return a.first > b.first; // descending by first
-             });
+    for (auto &query : queries) {
+        if (query[0] == 1) {
+            int i = query[1];   // position (1-based)
+            int x = query[2];   // x-th letter of alphabet (1-based)
 
-        sort(secondCopy.begin(), secondCopy.end(),
-             [](const pair<int, int> &a, const pair<int, int> &b) {
-                 return a.first > b.first; // descending by first
-             });
+            // Convert x to the corresponding lowercase letter
+            char newChar = 'a' + (x - 1);  // x=1 -> 'a', x=2 -> 'b', etc.
 
+            // Update the character at position i
+            data[i - 1] = newChar;
 
-        pair<int, int> sum1 = {0, 0}, sum2 = {0, 0};
-        for (int i = 0; i < k; i++) {
-            sum1.first += firstCopy[i].first;
-            sum1.second += second[firstCopy[i].second];
-            sum2.first += secondCopy[i].first;
-            sum2.second += first[secondCopy[i].second];
-        }
+        } else if (query[0] == 2) {
+            int l = query[1];
+            int r = query[2];
 
-        if (min(sum1.first, sum1.second) > min(sum2.first, sum2.second)) {
-            for (int i = 0; i < k; i++) {
-                cout << firstCopy[i].second << " ";
+            // Count distinct characters in range [l, r]
+            set<char> distinctChars;
+
+            for (int i = l-1; i <= r-1; i++) {
+                distinctChars.insert(data[i]);
             }
-        } else {
-            for (int i = 0; i < k; i++) {
-                cout << secondCopy[i].second << " ";
-            }
+         
+
+            results.push_back(distinctChars.size());
         }
-        cout << endl;
     }
 
+    return results;
+}
+
+int main() {
+    int n = 7;
+    string data = "abccbda";
+    vector<vector<int>> queries = {
+            {2, 3, 6},
+            {1, 2, 3},
+            {2, 2, 4},
+            {1, 1, 5},
+            {2, 1, 7}
+    };
+
+    vector<int> ans = getDistinctCharacters(n, data, queries);
+
+    for (int x : ans) cout << x << "\n";
     return 0;
 }

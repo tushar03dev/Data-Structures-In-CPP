@@ -1,39 +1,30 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    int n;
-    cout << "Enter the value of n: ";
-    cin >> n;
+int max =
 
-    int i = n;
-    long long outerLoopCount = 0; // Count for outer loop
-    long long middleLoopCount = 0; // Count for middle loop
-    long long innerLoopCount = 0; // Count for inner loop
-
-    while (i > 1) {
-        outerLoopCount++; // Increment for each iteration of outer loop
-        int j = i;
-
-        while (j < n) {
-            middleLoopCount++; // Increment for each iteration of middle loop
-            int k = 0;
-
-            while (k < n) {
-                innerLoopCount++; // Increment for each iteration of inner loop
-                k += 2;
-            }
-
-            j *= 2;
-        }
-
-        i /= 2;
+int solve(vector<int>& nums,int index,unordered_map<int,set<vector<int>>>& mp, int sum, int k){
+    if(index >= nums.size()){
+        return 0;
+    }
+    if(k > 2){
+        return 0;
     }
 
-    cout << "Outer loop executed: " << outerLoopCount << " times" << endl;
-    cout << "Middle loop executed: " << middleLoopCount << " times" << endl;
-    cout << "Inner loop executed: " << innerLoopCount << " times" << endl;
-    cout << "Total iterations: " << (outerLoopCount + middleLoopCount + innerLoopCount) << " times" << endl;
+    mp[sum].insert([nums[index]]);
+
+    int include = solve(nums,index+1,mp, sum+nums[index],k+1);
+
+    int exclude = solve(nums, index+1,mp, sum, k);
+
+
+}
+
+int main() {
+    vector<int> nums = {4,5,10,3,1,2,2,2,3};
+    sort(nums.begin(),nums.end());
+    unordered_map<int,set<vector<int>>> mp;
+    solve(nums,0,mp,0,0);
 
     return 0;
 }
