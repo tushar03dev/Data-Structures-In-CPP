@@ -17,4 +17,5 @@ int main(){
     q.push(20);
     cout<<q.front()<<endl;
     cout<<q.back()<<endl;
+    return 0;
 }
