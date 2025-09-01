@@ -8,7 +8,7 @@
 
 using namespace std;
 
-vector<int> nextSmaller(vector<int>& arr){
+vector<int> prevSmaller(vector<int>& arr){
     stack<int> st;
     vector<int> ans(arr.size(),-1);
     st.push(-1);
@@ -35,7 +35,7 @@ void print(vector<int>& ans){
 int main(){
     vector<int> arr = { 8, 4, 6, 2, 3};
 
-    vector<int> ans = nextSmaller(arr);
+    vector<int> ans = prevSmaller(arr);
     print(ans);
 
     return 0;
